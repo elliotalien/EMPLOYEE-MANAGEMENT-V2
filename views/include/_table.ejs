@@ -1,0 +1,47 @@
+<!--table content -->
+<div class="rightSide m-3 md:m-7 min-h-fit flex-1">
+<div class="bg-white rounded-lg px-6 py-6">
+<!-- table top content -->
+<div class="flex pb-6">
+ <div class="flex flex-1 items-center gap-2">
+     <div class="text-[15px] md:text-2xl font-bold leading-9 text-[#2B3674]">Employees List</div>
+     <select class="border outline-none p-2 rounded-lg bg-transparent" id="employeePerpage">
+         <option value="5" selected>5</option>
+         <option value="6">6</option>
+         <option value="7">7</option>
+         <option value="8">8</option>
+         <option value="9">9</option>
+         <option value="10">10</option>
+     </select>
+
+     <div class="pageCount">of 10</div>
+ </div>
+<button onclick="openAddEmployeeForm()" class="px-4 py-2.5 rounded-full text-white font-bold bg-[#4318FF] flex items-center justify-center">
+    <div class="md:hidden"><i class="fa-solid fa-plus "></i></div>
+    <span class="hidden md:block">Add Employee</span>
+</button>
+</div>
+
+<!-- table -->
+<table class="min-w-full ">
+<thead class="border-b">
+<tr >
+<th scope="col" class="px-4 py-2 text-left font-semibold text-sm text-gray-400 hidden min-860:table-cell">Sl.No <i class="fas fa-chevron-down ml-1 text-gray-400"></i></th>
+<th scope="col" class="px-4 py-2 text-left font-semibold text-sm text-gray-400">Name <i class="fas fa-chevron-down ml-1 text-gray-400"></i></th>
+<th scope="col" class="px-4 py-2 text-left font-semibold text-sm text-gray-400 hidden min-530:table-cell">Email <i class="fas fa-chevron-down ml-1 text-gray-400"></i></th>
+<th scope="col" class="px-4 py-2 text-left font-semibold text-sm text-gray-400 hidden min-961:table-cell">Phone <i class="fas fa-chevron-down ml-1 text-gray-400"></i></th>
+<th scope="col" class="px-4 py-2 text-left font-semibold text-sm text-gray-400 hidden min-1150:table-cell">Gender <i class="fas fa-chevron-down ml-1 text-gray-400"></i></th>
+<th scope="col" class="px-4 py-2 text-left font-semibold text-sm text-gray-400 hidden min-1277:table-cell">DOB <i class="fas fa-chevron-down ml-1 text-gray-400"></i></th>
+<th scope="col" class="px-4 py-2 text-left font-semibold text-sm text-gray-400 hidden min-1165:table-cell">Country <i class="fas fa-chevron-down ml-1 text-gray-400"></i></th>
+<th scope="col" class="px-4 py-2 text-left font-semibold text-sm text-gray-400 "></th>
+</tr>
+</thead>
+<tbody id="table-body" class="divide-y divide-gray-200 bg-white">    
+<!-- table data -->
+
+
+
+</tbody>
+</table>
+</div>
+</div>

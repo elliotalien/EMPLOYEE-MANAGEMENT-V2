@@ -1,0 +1,86 @@
+ <!--Employee view details content -->
+<div class="rightSide m-3 md:m-7 min-h-fit flex justify-center">
+    <div class="bg-white rounded-lg px-6 py-6 lg:w-[70%] max-1000:w-[90%] w-full">
+        <div class="ViewEmployeeBox">
+            <div class="ViewEmployeeBox-inner-section">
+                <div class="flex flex-col items-center">
+                    <img class="cover-image rounded-lg object-cover max-500:h-[110px] w-full" src="https://res.cloudinary.com/dyo6hu9bw/image/upload/v1741000372/EmployeeManagement/we864ifm3wmfw7iyjppq.png">
+                    <% if (employee.imageUrl) { %>
+                        <img class="rounded-full object-cover h-[120px] w-[120px] lg:w-[180px] lg:h-[180px] mt-[-60px] lg:mt-[-110px] border-4 border-white bg-white" 
+                             src="<%= employee.imageUrl %>" 
+                             alt="Employee Profile">
+                    <% } else { %>
+                        <% 
+                        const firstLetter = employee.firstName.charAt(0).toUpperCase();
+                        const colors = ['2196F3', '4CAF50', 'E91E63', 'FF9800', '9C27B0', '00BCD4'];
+                        const colorIndex = firstLetter.charCodeAt(0) % colors.length;
+                        const backgroundColor = colors[colorIndex];
+                        const avatarUrl = `https://ui-avatars.com/api/?name=${firstLetter}&background=${backgroundColor}&color=fff&size=256&bold=true&font-size=0.6`;
+                        %>
+                        <img class="rounded-full object-cover h-[120px] w-[120px] lg:w-[180px] lg:h-[180px] mt-[-60px] lg:mt-[-110px] border-4 border-white bg-white" 
+                             src="<%= avatarUrl %>" 
+                             alt="Employee Profile">
+                    <% } %>
+                    <div class="text-center">
+                        <div class="flex gap-1 justify-center">
+                        <div class="font-semibold text-[20px] mt-2 text-primaryText" data-field="salutation"><%= employee.salutation %></div>
+                        <div class="font-semibold text-[20px] mt-2 text-primaryText" data-field="firstName"><%= employee.firstName %></div>
+                        <div class="font-semibold text-[20px] mt-2 text-primaryText" data-field="lastName"><%= employee.lastName %></div>
+                    </div>
+                    <div class="employee-text-content text-[12px] font-semibold text-gray-400" data-field="email"><%= employee.email %></div>
+                    </div>
+                </div>
+        
+                <div class="flex flex-col gap-10 pt-5">
+                    <div class="grid max-1200:grid-cols-2 md:grid-cols-3 gap-5">
+                        <div class="employe-details-text shadow-[0px_18px_40px_0px_rgba(112,144,176,0.12)] p-5 rounded-[15px]">
+                            <div class="text-gray-400">Gender</div>
+                            <div class="text-primaryText font-semibold" data-field="gender"><%= employee.gender %></div>
+                        </div>
+        
+                        <div class="employe-details-text shadow-[0px_18px_40px_0px_rgba(112,144,176,0.12)] p-5 rounded-[15px]">
+                            <div class="text-gray-400">Qualification</div>
+                            <div class="text-primaryText font-semibold" data-field="qualifications"><%= employee.qualifications %></div>
+                        </div>
+        
+                        <div class="shadow-[0px_18px_40px_0px_rgba(112,144,176,0.12)] p-5 rounded-[15px] max-500:w-[200%]">
+                            <div class="text-gray-400">Date of Birth</div>
+                            <div class="text-primaryText font-semibold" data-field="dob"><%= employee.dob %></div>
+                        </div>
+                    </div>
+        
+                    <!-- row2 -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="shadow-[0px_18px_40px_0px_rgba(112,144,176,0.12)] p-5 rounded-[15px]">
+                            <div class="text-gray-400">Mobile Number</div>
+                            <div class="text-primaryText font-semibold" data-field="phone"><%= employee.phone %></div>
+                        </div>
+        
+                        <div class="shadow-[0px_18px_40px_0px_rgba(112,144,176,0.12)] p-5 rounded-[15px]">
+                            <div class="text-gray-400">Username</div>
+                            <div class="text-primaryText font-semibold" data-field="username"><%= employee.username %></div>
+                        </div>
+                    </div>
+        
+                    <!-- row3 -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="shadow-[0px_18px_40px_0px_rgba(112,144,176,0.12)] p-5 rounded-[15px]">
+                            <div class="text-gray-400">Address</div>
+                            <div class="text-primaryText font-semibold" data-field="address"><%= employee.address %></div>
+                        </div>
+        
+                        <div class="shadow-[0px_18px_40px_0px_rgba(112,144,176,0.12)] p-5 rounded-[15px]">
+                            <div class="text-gray-400">Country</div>
+                            <div class="text-primaryText font-semibold" data-field="country"><%= employee.country %></div>
+                        </div>
+                    </div>
+        
+                    <div class="flex gap-5 justify-end">
+                        <button type="button" class="px-4 py-2.5 rounded-full text-white font-bold bg-red-500 flex items-center justify-center text-[13px]" onclick="deleteBox('<%= employee._id %>')">Delete</button>
+                        <button type="button" class="px-4 py-2.5 rounded-full text-white font-bold bg-primaryBtn flex items-center justify-center text-[13px]" onclick="editForm('<%= employee._id %>')">Edit Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

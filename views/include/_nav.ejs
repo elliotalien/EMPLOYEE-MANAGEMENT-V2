@@ -1,0 +1,36 @@
+<div id="leftSideNav" class="h-screen w-full max-w-[65%] overflow-scroll scrollbar-hide flex flex-col hidden md:flex absolute md:relative md:w-auto bg-gradient-to-br from-[#301F81] to-[#0F0441] z-40">
+    <div class="text-2xl border-b border-gray-500 py-6 px-7 w-full text-white leading-[28.75px]">
+        <div class="font-bold">Employee</div>
+        <div class="">Management</div>
+    </div>
+    <ul class="flex flex-col flex-1 items-baseline py-6 px-7 gap-5 text-gray-400 font-semibold">
+        <li class="p-4 hover:bg-opacity-25 hover:bg-white rounded-lg w-full md:hidden flex items-center gap-5" onclick="toggleMenu()"><i class="fa-solid fa-arrow-left"></i> <span>Back</span></li>
+        <li class="p-4 hover:bg-opacity-25 hover:bg-white rounded-lg w-full">
+            <a href="/dashboard" class="flex items-center gap-5">
+                <i class="fa-solid fa-chart-simple"></i> <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="p-4 hover:bg-opacity-25 hover:bg-white rounded-lg w-full">
+            <a href="/employees" class="flex items-center gap-5">
+                <i class="fa-solid fa-users"></i> <span>Employees</span>
+            </a>
+        </li>
+        <li class="p-4 hover:bg-opacity-25 hover:bg-white rounded-lg w-full">
+            <a href="/profile" class="flex items-center gap-5">
+                <i class="fa-solid fa-user"></i> <span>My Profile</span>
+            </a>
+        </li>
+        <li class="p-4 hover:bg-opacity-25 hover:bg-white rounded-lg w-full">
+            <a href="/logout" class="flex items-center gap-5">
+                <i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span>
+            </a>
+        </li>
+    </ul>
+    <div class="flex items-center gap-2 p-[27px] justify-center border-t border-gray-500 px-10">
+        <span class="text-[10px] text-gray-400">Powered by</span>
+        <div class="flex justify-center items-center">
+            <img src="/assets/E.svg" alt="logo image" class="w-[39px]">
+            <div class="text-white font-bold">CORP</div>
+        </div>
+    </div>
+</div>

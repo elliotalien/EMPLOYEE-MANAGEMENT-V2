@@ -1,0 +1,483 @@
+<%- include('include/_header') %>
+
+<div class="flex min-h-screen bg-gray-100">
+    <!-- Sidebar -->
+    <%- include('include/_nav') %>
+
+    <!-- Main Content -->
+    <div class="flex flex-col h-screen flex-1 scrollbar-hide rightSide overflow-scroll bg-[rgb(244,247,254)]">
+        <!-- Top Header -->
+        <%- include('include/_rightheader') %>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto scrollbar-hide">
+            <div class="p-6 mb-14">
+                <!-- Statistics Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                    <!-- Total Employees -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-lg font-semibold text-gray-800">Total Employees</h3>
+                            <div class="w-12 h-12 rounded-full bg-blue-100/50 flex items-center justify-center">
+                                <i class="fas fa-users text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-6">
+                            <p class="text-4xl font-bold text-gray-900"><%= stats.total %></p>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-green-600">Active</p>
+                                    <p class="text-2xl font-bold text-gray-900"><%= stats.active %></p>
+                                </div>
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-yellow-600">On Leave</p>
+                                    <p class="text-2xl font-bold text-gray-900"><%= stats.onLeave %></p>
+                                </div>
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-red-600">Inactive</p>
+                                    <p class="text-2xl font-bold text-gray-900"><%= stats.inactive %></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Salary Statistics -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-xl font-semibold text-gray-800">Salary Statistics</h2>
+                            <div class="bg-green-100 w-10 h-10 rounded-full flex items-center justify-center">
+                                <span class="text-green-500 text-xl font-semibold">₹</span>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">Total Salary</p>
+                                <p class="text-2xl font-bold text-gray-900"><%= stats.totalSalary %></p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">Average per Employee</p>
+                                <p class="text-2xl font-bold text-gray-900"><%= stats.avgSalary %></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Department Statistics -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-lg font-semibold text-gray-800">Departments</h3>
+                            <div class="w-12 h-12 rounded-full bg-purple-100/50 flex items-center justify-center">
+                                <i class="fas fa-building text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-sm text-gray-500 mb-1">Total Departments</p>
+                                <p class="text-2xl font-bold text-gray-900">
+                                    <%= stats.departmentCount %>
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500 mb-1">Most Active</p>
+                                <p class="text-lg font-semibold text-gray-900">
+                                    <%= stats.mostActiveDepartment %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Rate -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-lg font-semibold text-gray-800">Activity Rate</h3>
+                            <div class="w-12 h-12 rounded-full bg-yellow-100/50 flex items-center justify-center">
+                                <i class="fas fa-chart-line text-yellow-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-end justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 mb-1">Current Rate</p>
+                                    <p class="text-2xl font-bold text-gray-900"><%= stats.activeRate %>%</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm text-gray-600 mb-1">Target</p>
+                                    <p class="text-2xl font-bold text-gray-900"><%= stats.targetRate %>%</p>
+                                </div>
+                            </div>
+                            <% 
+                                const isOnTarget = stats.activeRate >= stats.targetRate;
+                                const progressWidth = Math.min(100, Math.max(0, stats.activeRate));
+                                const statusColor = stats.activeRate >= stats.targetRate ? 'bg-green-600' : 
+                                                  stats.activeRate >= 70 ? 'bg-yellow-600' : 'bg-red-600';
+                                const textColor = stats.activeRate >= stats.targetRate ? 'text-green-600' : 
+                                                stats.activeRate >= 70 ? 'text-yellow-600' : 'text-red-600';
+                            %>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="h-2.5 rounded-full transition-all duration-300 <%= statusColor %>" 
+                                    style="width: <%= progressWidth %>%"></div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <p class="text-sm font-medium <%= textColor %>">
+                                    <%= stats.activeStatus %>
+                                </p>
+                                <% if (!isOnTarget) { %>
+                                    <p class="text-xs text-gray-500">
+                                        <%= (stats.targetRate - stats.activeRate).toFixed(1) %>% to target
+                                    </p>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts and Tables Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <!-- Department Distribution -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-lg font-semibold text-gray-800">Department Distribution</h3>
+                            <div class="w-12 h-12 rounded-full bg-purple-100/50 flex items-center justify-center">
+                                <i class="fas fa-building text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <% if (stats.departmentDistribution && stats.departmentDistribution.length > 0) { %>
+                                <div class="space-y-4">
+                                    <% stats.departmentDistribution.forEach(function(dept) { %>
+                                        <div class="space-y-2">
+                                            <div class="flex justify-between text-sm">
+                                                <span class="font-medium text-gray-700"><%= dept.name %></span>
+                                                <span class="text-gray-600"><%= dept.count %> employees (<%= dept.percentage %>%)</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="h-2 rounded-full transition-all duration-300"
+                                                    style="width: <%= dept.percentage %>%; background-color: <%= dept.color %>"></div>
+                                            </div>
+                                        </div>
+                                    <% }); %>
+                                </div>
+                            <% } else { %>
+                                <div class="flex flex-col items-center justify-center py-8">
+                                    <div class="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-purple-100">
+                                        <i class="fas fa-building text-2xl text-purple-500"></i>
+                                    </div>
+                                    <p class="text-gray-500 text-sm">No departments available</p>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <!-- Monthly Hiring Trends -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Monthly Hiring Trends</h3>
+                        <div class="relative" style="height: 300px;">
+                            <canvas id="hiringTrendsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <script>
+                        // Monthly Hiring Trends Chart
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const hiringCtx = document.getElementById('hiringTrendsChart');
+                            
+                            if (hiringCtx) {
+                                const ctx = hiringCtx.getContext('2d');
+                                const hiringData = {
+                                    labels: <%- JSON.stringify(stats.monthlyHiring?.labels || []) %>,
+                                    data: <%- JSON.stringify(stats.monthlyHiring?.data || []) %>
+                                };
+                                
+                                console.log('Chart Data:', hiringData);
+                                
+                                new Chart(ctx, {
+                                    type: 'line',
+                                    data: {
+                                        labels: hiringData.labels,
+                                        datasets: [{
+                                            label: 'New Hires',
+                                            data: hiringData.data,
+                                            borderColor: 'rgb(59, 130, 246)',
+                                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                            borderWidth: 2,
+                                            tension: 0.4,
+                                            fill: true,
+                                            pointBackgroundColor: 'rgb(59, 130, 246)',
+                                            pointRadius: 4,
+                                            pointHoverRadius: 6
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        maintainAspectRatio: false,
+                                        plugins: {
+                                            legend: {
+                                                display: true,
+                                                position: 'top'
+                                            },
+                                            tooltip: {
+                                                mode: 'index',
+                                                intersect: false,
+                                                callbacks: {
+                                                    label: function(context) {
+                                                        const count = context.parsed.y;
+                                                        return `${count} new ${count === 1 ? 'hire' : 'hires'}`;
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true,
+                                                ticks: {
+                                                    stepSize: 1,
+                                                    precision: 0
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    </script>
+                </div>
+
+                <!-- Salary Distribution and Recent Activities -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <!-- Salary Distribution -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-semibold text-gray-800">Salary Distribution</h3>
+                            <div class="text-sm text-gray-600">
+                                Total Employees: <%= stats.total %>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <% if (stats.salaryDistribution && stats.salaryDistribution.length > 0) { %>
+                                <% stats.salaryDistribution.forEach(range => { %>
+                                    <div class="relative">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <div>
+                                                <span class="text-gray-800 font-medium"><%= range.label %></span>
+                                                <span class="text-gray-500 text-sm ml-2">(<%= range.range %>)</span>
+                                            </div>
+                                            <span class="text-blue-600 text-sm">
+                                                <%= range.count %> employees (<%= range.percentage %>%)
+                                            </span>
+                                        </div>
+                                        <div class="w-full bg-gray-100 rounded-full h-2.5">
+                                            <div class="bg-gray-200 h-2.5 rounded-full transition-all duration-300"
+                                                style="width: <%= Math.max(range.percentage, 5) %>%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            <% } else { %>
+                                <div class="flex flex-col items-center justify-center py-8">
+                                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <p class="text-gray-500">No salary data available</p>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activities -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-semibold text-gray-800">Recent Activities</h3>
+                            <span class="text-sm text-gray-500">
+                                <%= stats.recentActivities ? stats.recentActivities.length : 0 %> activities
+                            </span>
+                        </div>
+
+                        <div class="relative">
+                            <!-- Timeline Line -->
+                            <div class="absolute left-6 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+
+                            <!-- Scrollable Container -->
+                            <div class="activities-container max-h-[500px] overflow-y-auto pr-4">
+                                <div class="space-y-6">
+                                    <% if (stats.recentActivities && stats.recentActivities.length > 0) { %>
+                                        <% stats.recentActivities.forEach(activity => { %>
+                                            <div class="relative flex items-start group">
+                                                <!-- Timeline Dot -->
+                                                <div class="absolute left-6 h-3 w-3 rounded-full bg-blue-500 transform -translate-x-1/2 mt-2"></div>
+                                                
+                                                <!-- Content -->
+                                                <div class="ml-10 flex-1">
+                                                    <div class="bg-white p-4 rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200">
+                                                        <!-- Header -->
+                                                        <div class="flex justify-between items-start mb-2">
+                                                            <div class="flex items-center space-x-2">
+                                                                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                                                    <span class="text-sm font-semibold text-blue-600">
+                                                                        <%= activity.employeeName ? activity.employeeName.charAt(0) : '?' %>
+                                                                    </span>
+                                                                </div>
+                                                                <div>
+                                                                    <h4 class="text-sm font-medium text-gray-900">
+                                                                        <%= activity.employeeName %>
+                                                                    </h4>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-right text-xs text-gray-500">
+                                                                <div><%= activity.timestamp %></div>
+                                                                <div><%= activity.time %></div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Activity Details -->
+                                                        <div class="mt-2">
+                                                            <div class="flex items-center space-x-2">
+                                                                <span class="text-sm text-gray-600">
+                                                                    <% if (activity.type === 'department_change') { %>
+                                                                        Moved from <span class="font-medium"><%= activity.previousDepartment || 'Unassigned' %></span> 
+                                                                        to <span class="font-medium"><%= activity.department %></span>
+                                                                    <% } else { %>
+                                                                        Joined <span class="font-medium"><%= activity.department %></span> department
+                                                                    <% } %>
+                                                                </span>
+                                                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium
+                                                                    <%= activity.status === 'Active' ? 'bg-green-100 text-green-800' : 
+                                                                        activity.status === 'On Leave' ? 'bg-yellow-100 text-yellow-800' : 
+                                                                        'bg-gray-100 text-gray-800' %>">
+                                                                    <%= activity.status %>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <div class="flex flex-col items-center justify-center py-8">
+                                            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                                                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg>
+                                            </div>
+                                            <p class="text-gray-500 text-sm">No recent activities to show</p>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <style>
+                        @keyframes ping-slow {
+                            75%, 100% {
+                                transform: scale(1.5);
+                                opacity: 0;
+                            }
+                        }
+                        .animate-ping-slow {
+                            animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+                        }
+
+                        /* Custom Scrollbar Styles */
+                        .activities-container::-webkit-scrollbar {
+                            width: 8px;
+                        }
+
+                        .activities-container::-webkit-scrollbar-track {
+                            background: #f1f1f1;
+                            border-radius: 4px;
+                        }
+
+                        .activities-container::-webkit-scrollbar-thumb {
+                            background: #cbd5e1;
+                            border-radius: 4px;
+                            transition: background-color 0.2s ease;
+                        }
+
+                        .activities-container::-webkit-scrollbar-thumb:hover {
+                            background: #94a3b8;
+                        }
+
+                        /* Firefox Scrollbar */
+                        .activities-container {
+                            scrollbar-width: thin;
+                            scrollbar-color: #cbd5e1 #f1f1f1;
+                        }
+
+                        /* Ensure smooth scrolling */
+                        .activities-container {
+                            scroll-behavior: smooth;
+                        }
+                    </style>
+                </div>
+
+                <!-- Recent Employees Table -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6">Recent Employees</h3>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Salary</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <% if (stats.recentEmployees && stats.recentEmployees.length > 0) { %>
+                                    <% stats.recentEmployees.forEach(employee => { %>
+                                        <tr class="hover:bg-gray-50 transition-colors duration-200">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                                                        <span class="text-lg font-semibold text-blue-600">
+                                                            <%= employee.firstName ? employee.firstName.charAt(0).toUpperCase() : '?' %>
+                                                        </span>
+                                                    </div>
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-gray-900">
+                                                            <%= employee.firstName %> <%= employee.lastName %>
+                                                        </div>
+                                                        <div class="text-sm text-gray-500">
+                                                            <%= employee.email %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+                                                    <%= employee.department %>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full
+                                                    <%= employee.status === 'Active' ? 'bg-green-100 text-green-800' : 
+                                                        employee.status === 'On Leave' ? 'bg-yellow-100 text-yellow-800' : 
+                                                        'bg-gray-100 text-gray-800' %>">
+                                                    <%= employee.status %>
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                ₹<%= employee.salary ? employee.salary.toLocaleString('en-IN') : 0 %>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">
+                                            No employees found
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <%- include('include/_footer') %>
+        </main>
+    </div>
+</div>

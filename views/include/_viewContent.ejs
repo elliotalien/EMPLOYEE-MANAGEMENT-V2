@@ -1,0 +1,9 @@
+<div class="flex">
+    <%- include('_nav') %>
+    <!-- Right side content -->
+    <div class="flex flex-col h-screen flex-1 scrollbar-hide rightSide overflow-scroll bg-[rgb(244,247,254)]">
+        <%- include('_rightheader') %>
+        <%- include('_viewData', { imageUrl: imageUrl, employee: employee }) %>
+        <%- include('_footer') %>
+    </div>
+</div>

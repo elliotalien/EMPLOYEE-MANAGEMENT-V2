@@ -1,0 +1,32 @@
+<div class="flex m-3 md:m-7 gap-4">
+    <div class="md:hidden flex items-center text-[#2B3674] flex-1">
+        <button onclick="toggleMenu()">
+            <i class="fa-solid fa-bars text-3xl"></i>
+        </button>
+    </div>
+    <div class="hidden md:block flex-1">
+        <h1 class="text-[#707EAE] text-[15px]">Dashboard / Employees</h1>
+        <h1 class="text-4xl font-bold font-sans text-text-color leading-[42px] text-[#2B3674] ">Employees</h1>
+    </div>
+    <!-- search box -->
+    <div class="p-2 sm:p-3 rounded-full flex items-center bg-white gap-2">
+        <div class="flex items-center p-2 rounded-full bg-[rgb(244,247,254)]">
+            <i class="fa-solid fa-search text-gray-500 mr-2 sm:mr-3 pl-2 sm:pl-3"></i>
+            <input type="search" class="w-full outline-none bg-transparent text-sm" placeholder="Search">
+        </div>
+        <i class="fa-solid fa-bell text-gray-500 mx-2 sm:mx-3"></i>
+        <div class="relative group">
+            <button class="focus:outline-none flex items-center justify-center">
+                <% if (user && user.profileImage) { %>
+                    <img src="<%= user.profileImage.url %>" 
+                         alt="Profile Picture" 
+                         class="rounded-full w-8 h-8 sm:w-10 sm:h-10 object-cover cursor-pointer">
+                <% } else { %>
+                    <img src="<%= user.profileImage.url %>" 
+                         alt="Profile Picture" 
+                         class="rounded-full w-8 h-8 sm:w-10 sm:h-10 object-cover cursor-pointer">
+                <% } %>
+            </button>
+        </div>
+    </div>
+</div>
