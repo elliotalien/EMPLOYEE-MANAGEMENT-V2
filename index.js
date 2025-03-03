@@ -15,9 +15,6 @@ const app = express();
 // Connect to database
 connectDB();
 
-// Flash messages middleware
-app.use(flash());
-
 // Cookie Parser
 app.use(cookieParser());
 
@@ -38,6 +35,9 @@ app.use(
     },
   })
 );
+
+// Flash messages middleware
+app.use(flash());
 
 // Set EJS as templating engine
 app.set("view engine", "ejs");
